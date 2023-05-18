@@ -1,9 +1,9 @@
 const App = () => {
   return (
     <div className="App">
-      <span>105</span>
+      <span>106</span>
       <span></span>
-      <span>105</span>
+      <span>106</span>
     </div>
   );
 };
