@@ -5,23 +5,25 @@ on:
   pull_request:
     branches: ["main"]
 jobs:
-  build:
+  deployment:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./GITHUB_ACTIONS
-    steps:
-      - uses: actions/checkout@v2
-      - name: npm install
-        run: rm -f package-lock.json && npm install
-      - name: build
-        run: npm run build
 
-  test:
-    runs-on: ubuntu-latest
+    # 해당 Job의 이름을 아래와 같이 설정하여 Actions 탭에서 확인할 수 있게 설정합니다.
+    name: Deploying to surge
+
     steps:
-      - name: Install dependencies
+      # 해당 레포지토리로 check-out하는 Action을 불러왔습니다.
+      - uses: actions/checkout@v2
+
+      # Node 환경을 설정하여 npm 커맨드를 사용할 수 있도록 하는 Action을 불러옵니다.
+      # 여기에서는 14 버전을 사용하고 있습니다.
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      # 해당 프로젝트에서 사용하는 모든 라이브러리와 Surge를 설치합니다.
+      - name: Install Dependencies and Surge
         run: |
-          echo "Installation Start!"
-          python -m pip install -U pip setuptools
-          echo "Completion 😃"
+          npm install
+      - name: Build React Application
+        run: npm run build
