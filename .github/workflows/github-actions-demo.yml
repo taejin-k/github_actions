@@ -5,9 +5,9 @@ on:
   pull_request:
     branches: ["main"]
 jobs:
-  deployment:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - run: mkdir test
+      - run: touch text.js
