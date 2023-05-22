@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: CI/CD
 
 on:
   push:
@@ -14,12 +14,15 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Npm Ci
         run: npm ci
 
       - name: Build
